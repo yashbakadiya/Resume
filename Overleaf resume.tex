@@ -1,0 +1,301 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=1.2 cm, % seperation between body and page edge from the top
+    bottom=0.8 cm, % seperation between body and page edge from the bottom
+    left=0.8 cm, % seperation between body and page edge from the left
+    right=0.8 cm, % seperation between body and page edge from the right
+    footskip=0.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 79, 144} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={},
+    pdfauthor={},
+    pdfcreator={},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    % \usepackage[T1]{fontenc} % this breaks sb2nov
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+
+
+% Some settings:
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0cm} % set column seperation
+\makeatletter
+\let\ps@customFooterStyle\ps@plain % Copy the plain style to customFooterStyle
+ % replace number by desired string
+\makeatother
+
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\circ$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.4 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.2 cm + 0.00001 cm
+    }{
+        0.2 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+    \begin{header}
+        \textbf{\fontsize{24 pt}{24 pt}\selectfont Yash Bakadiya}
+
+        \vspace{0.0 cm}
+
+        \normalsize
+        \mbox{\hrefWithoutArrow{mailto:bakadiyayash@gmail.com}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}bakadiyayash@gmail.com}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{tel:+91-9098209295}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}+91-9098209295}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/yashbakadiya}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}yashbakadiya}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://github.com/yashbakadiya}{\color{black}{\footnotesize\faGithub}\hspace*{0.13cm}yashbakadiya}}%
+    \end{header}
+
+    \vspace{0.3 cm - 0.3 cm}
+
+
+    \section{Summary}
+
+        
+        \begin{onecolentry}
+\textbf{Java Developer} with hands-on experience in building scalable enterprise applications using \textbf{Spring Boot, Microservices, Java}, and \textbf{MySQL}. Skilled in developing and testing robust backend systems, automating deployments, and collaborating across cross-functional teams. Strong understanding of clean coding practices, CI/CD processes, and software quality standards. Quick learner with a focus on delivering efficient and reliable solutions.
+        \end{onecolentry}
+
+        \section{Technologies}
+        
+        \begin{onecolentry}
+            \textbf{Backend:} Java, Spring Boot, Microservices, RESTful APIs, SOAP Web Services.
+        \end{onecolentry}
+
+        \begin{onecolentry}
+            \textbf{Frontend:} HTML5, CSS3, SCSS, AngularJS, JavaScript, TypeScript. \end{onecolentry}
+
+
+        \begin{onecolentry}
+            \textbf{Database:} SQL (MySQL), NoSQL (MongoDB, Cassandra). \end{onecolentry}
+
+
+        \begin{onecolentry}
+            \textbf{Tools / Frameworks:} Git, Jenkins, Postman, JUnit, JWT. \end{onecolentry}
+    
+    \section{Education}
+
+        \begin{twocolentry}{
+            
+            
+        \textit{Jul 2018 – May 2022}}
+            \textbf{Shri Vaishnav Vidyapeeth Vishwavidyalaya, Indore, MP}
+
+            \textit{Bachelor of Technology in Information Technology - 6.5 CGPA}
+        \end{twocolentry}
+        
+    
+    \section{Experience}
+        
+        \begin{twocolentry}{
+        \textit{Pune, MH}    
+            
+        \textit{Sep 2022 - Present}}
+            \textbf{Project Engineer}
+            
+            \textit{Wipro}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed scalable applications using \textbf{Java, Spring Boot}, and \textbf{Microservices} for a leading US banking client.
+                \item Led a project to modernize a legacy SOAP system, enhancing the system performance and functionality.
+                \item Gained practical expertise with \textbf{SQL (Oracle, MySQL)} and \textbf{NoSQL (MongoDB, Cassandra)} databases.
+                \item Automated deployments using \textbf{Jenkins}, reducing release times by \textbf{40\%}.
+                \item Built \textbf{50+ JUnit test cases} achieving \textbf{95\%+ coverage} and improved code quality through active code reviews.
+                \item Supported a critical \textbf{ESD migration project}, resolved \textbf{ 50 + issues} and ensured regulatory compliance.
+                \item Collaborated with the REST and TIBCO teams to deliver stable and user-focused solutions.
+                \item Adapted quickly to new tools and technologies, ensuring smooth project delivery.
+                \begin{onecolentry}
+                    \small{\textbf{Technologies Used :} Java, Spring Boot, Microservices, Git, Postman, JUnit, MySQL, Cassandra, Jenkins.}
+                \end{onecolentry}
+            \end{highlights}
+        \end{onecolentry}
+\vspace{0.12 cm}
+        \begin{twocolentry}{
+        \textit{Indore, MP}    
+            
+        \textit{May 2021 - Aug 2021}}
+            \textbf{Project Intern}
+            
+            \textit{JDMR iSchool}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed backend features with \textbf{Django}, improving application performance by \textbf{25\%}.
+                \item Enhanced UI/UX for web applications, increasing user engagement by \textbf{15\%}.
+                \item Demonstrated proficiency in \textbf{HTML, CSS,} and \textbf{JavaScript} for responsive web development.
+                \item Diagnosed and resolved issues on multiple web properties.
+                \begin{onecolentry}
+                    \small{\textbf{Technologies Used :} Python, Django, HTML, CSS, JavaScript, jQuery and MySQL.}
+                \end{onecolentry}
+            \end{highlights}
+        \end{onecolentry}
+   
+    \section{Projects}
+        
+        \begin{twocolentry}{
+                        
+        \textit{\href{https://github.com/yashbakadiya/wipro-Java-FSD/tree/feb-2024/Cricket_Player_Project_Backend/backend}{github.com/name/repo}}}
+            \textbf{Microservices Web Application: User Management and Favorite Items}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Built a scalable microservices-based application for managing users and their favorite items, implementing secure \textbf{JWT authentication, REST APIs,} and dynamic \textbf{service discover}y with \textbf{Netflix Eureka}.
+                \begin{onecolentry}
+                    \small{\textbf{Technologies Used :} Java, Spring Boot, Spring Data JPA, Spring Cloud Netflix Eureka, REST APIs, JWT, MySQL, Postman.}
+                \end{onecolentry}
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+            
+        \textit{\href{https://github.com/yashbakadiya/MyBlog/tree/master}{github.com/name/repo}}}
+            \textbf{Publish Blog and User Authentication System}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a full-stack web application to enable users to \textbf{securely register, manage profiles, and publish blog posts,} combining user authentication with dynamic content management.
+                \begin{onecolentry}
+                    \small{\textbf{Technologies Used :} Python, Django, HTML, CSS, JavaScript, SQLite.}
+                \end{onecolentry}
+            \end{highlights}
+        \end{onecolentry}
+   
+
+        \section{Certifications}
+
+        \begin{twocolentry}{}
+            \href{https://www.credly.com/badges/8b7ca79b-5b87-4f01-b838-330ffaa11176/linked_in_profile}{\textbf{AWS Certified Cloud Practitioner}}        
+            
+
+        \end{twocolentry}
+
+
+\end{document}
